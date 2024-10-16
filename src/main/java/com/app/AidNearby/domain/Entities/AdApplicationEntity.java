@@ -16,13 +16,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "approved_ads")
-public class ApprovedAdsEntity {
+@Table(name = "ad_applications")
+public class AdApplicationEntity {
     @Id
-    private UUID approvedAdId;
+    private UUID adApplicationId;
     private UUID userId;
     private UUID adId;
-    private Date assignedAt;
-    private String taskStatus;
-    private Date completedAt;
+    private String applicationStatus;
+    private Date submittedAt;
+    private String userMessage;
+    private Boolean isApproved;
 }
