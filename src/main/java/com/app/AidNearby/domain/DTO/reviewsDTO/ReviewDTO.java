@@ -1,26 +1,20 @@
-package com.app.AidNearby.domain.Entities;
+package com.app.AidNearby.domain.DTO.reviewsDTO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
-@Entity
-@Setter
-@Getter
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "reviews")
-public class ReviewEntity {
-    @Id
+@Builder
+public class ReviewDTO {
     private UUID reviewId;
     private UUID userId;
-    private UUID ratedUserId;
     private UUID adId;
     private int rating;
     private String comment;

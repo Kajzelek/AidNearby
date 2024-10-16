@@ -1,4 +1,4 @@
-package com.app.AidNearby.domain.Entities;
+package com.app.AidNearby.domain.Entities.user;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;

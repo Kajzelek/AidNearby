@@ -1,4 +1,4 @@
-package com.app.AidNearby.domain.Entities;
+package com.app.AidNearby.domain.Entities.user;
 
 import jakarta.persistence.Id;
 import java.util.Date;

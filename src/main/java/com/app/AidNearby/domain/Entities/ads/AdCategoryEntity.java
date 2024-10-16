@@ -1,4 +1,4 @@
-package com.app.AidNearby.domain.Entities;
+package com.app.AidNearby.domain.Entities.ads;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
