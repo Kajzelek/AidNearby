@@ -1,7 +1,6 @@
 package com.app.AidNearby.domain.DTO.adsDTO;
 
 import com.app.AidNearby.domain.Entities.ads.AdCategoryEntity;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class adDTO {
+public class AdDTO {
     private UUID adId;
     private UUID userId;
     private String adTitle;

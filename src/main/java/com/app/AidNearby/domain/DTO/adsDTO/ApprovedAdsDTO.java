@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class approvedAdsDTO {
+public class ApprovedAdsDTO {
     private UUID userId;
     private UUID adId;
     private Date assignedAt;

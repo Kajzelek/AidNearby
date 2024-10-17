@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class notificationDTO {
+public class NotificationDTO {
     private String notificationType;
     private String notificationMessage;
     private Boolean isRead;
