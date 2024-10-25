@@ -2,6 +2,7 @@ package com.app.AidNearby.domain.Entities.ads;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +26,9 @@ public class ApprovedAdsEntity {
     private Date assignedAt;
     private String taskStatus;
     private Date completedAt;
+
+    @PrePersist
+    public void prePersist() {
+        assignedAt = new Date();
+    }
 }

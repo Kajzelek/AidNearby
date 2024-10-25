@@ -1,8 +1,7 @@
 package com.app.AidNearby.domain.Entities.ads;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.app.AidNearby.domain.Entities.user.UserEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +18,24 @@ import java.util.UUID;
 @Table(name = "ad_applications")
 public class AdApplicationEntity {
     @Id
+    @GeneratedValue(generator = "UUID")
     private UUID adApplicationId;
-    private UUID userId;
     private UUID adId;
+    @Column(name = "ad_creator_id")
+    private UUID userId;
     private String applicationStatus;
     private Date submittedAt;
+    private Date createdAt;
     private String userMessage;
     private Boolean isApproved;
+
+    @ManyToOne
+    @JoinColumn(name = "applicant_user_id")
+    private UserEntity user;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Date();
+    }
+
 }

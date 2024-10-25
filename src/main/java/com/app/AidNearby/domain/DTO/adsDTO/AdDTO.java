@@ -19,5 +19,5 @@ public class AdDTO {
     private AdCategoryEntity adCategory;
     private String adDescription;
     private String adLocation;
-    private Boolean adStatus;
+    private String adStatus;
 }

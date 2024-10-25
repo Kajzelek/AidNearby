@@ -1,20 +1,21 @@
 package com.app.AidNearby.domain.DTO.userDTO;
 
-import jakarta.persistence.ElementCollection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserCredentialsDTO {
-    private UUID userId;
+public class ProfileDataDTO {
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String address;
     private String profilePicture;
     private String bio;
     private int age;

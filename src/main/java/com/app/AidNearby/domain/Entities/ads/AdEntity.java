@@ -1,13 +1,10 @@
 package com.app.AidNearby.domain.Entities.ads;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.app.AidNearby.domain.Entities.user.UserEntity;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Date;
 import java.util.UUID;
 
 @Setter
@@ -15,15 +12,26 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "ads")
 public class AdEntity {
     @Id
+    @GeneratedValue(generator = "UUID")
     private UUID adId;
-    private UUID userId;
     private String adTitle;
     @ManyToOne
     private AdCategoryEntity adCategory;
     private String adDescription;
     private String adLocation;
-    private Boolean adStatus;
+    private String adStatus;
+    private Date createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Date();
+    }
 }
