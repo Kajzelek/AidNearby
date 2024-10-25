@@ -1,8 +1,10 @@
 package com.app.AidNearby.controllers.EntryControllers;
 
+import com.app.AidNearby.domain.DTO.authDTO.AuthResponseDTO;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
 import com.app.AidNearby.mappers.impl.UserMapper;
 import com.app.AidNearby.services.impl.EntryServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,5 +21,9 @@ public class EntryController {
     public ResponseEntity<?> registerUser(@RequestParam String password, @RequestParam String username, @RequestParam String email){
         UserEntity savedUserEntity = entryService.createUser(password, username, email);
         return new ResponseEntity<>(userMapper.mapToDto(savedUserEntity), org.springframework.http.HttpStatus.CREATED);
+    }
+    @PostMapping("/login")
+    public AuthResponseDTO login(@RequestParam String password, @RequestParam String username, HttpServletRequest request) {
+        return entryService.verify(password, username,request);
     }
 }
