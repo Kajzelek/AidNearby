@@ -3,6 +3,8 @@ package com.app.AidNearby.services.impl;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
 import com.app.AidNearby.domain.Models.UserPrincipal;
 import com.app.AidNearby.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepo.findByUsername(username);
 

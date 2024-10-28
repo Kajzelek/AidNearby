@@ -40,7 +40,7 @@ public class JWTserviceImpl implements JWTservice {
         claims.put("ipAddress", ipAddress);
 
         return Jwts.builder().claims().add(claims).subject(username).issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30 * 30))
+                .expiration(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000))
                 .and().signWith(getKey())
                 .compact();
     }
@@ -55,12 +55,18 @@ public class JWTserviceImpl implements JWTservice {
 
     @Override
     public Claims extractAllClaims(String token) {
-        return null;
+        return Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     @Override
     public String extractUsername(String token) {
-        return "";
+        // extract the username from jwt token
+        token = token.trim();
+        return extractClaim(token, Claims::getSubject);
     }
 
     @Override

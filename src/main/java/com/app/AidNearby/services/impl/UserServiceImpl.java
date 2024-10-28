@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String fillOutProfile(ProfileDataDTO profileDataDTO, UUID userId) {
-        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found by ID"));
 
         userEntity.setFirstName(profileDataDTO.getFirstName());
         userEntity.setLastName(profileDataDTO.getLastName());
