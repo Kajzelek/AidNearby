@@ -28,6 +28,7 @@ public class UserEntity {
     private String role; // TODO: Figure out which type this should be
     private Boolean isBanned;
     private Boolean isDeleted;
+    private Boolean isNewUser;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -52,6 +53,7 @@ public class UserEntity {
         createdAt = new Date();
         isBanned = false;
         isDeleted = false;
+        isNewUser = true;
         subsidarityAvgRating = 0.0f;
     }
 

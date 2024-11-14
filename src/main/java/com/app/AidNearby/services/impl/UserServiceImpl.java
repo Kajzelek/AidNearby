@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setAge(profileDataDTO.getAge());
         userEntity.setInterests(profileDataDTO.getInterests());
 
+        userEntity.setIsNewUser(false);
         userRepository.save(userEntity);
         return "Profile filled out successfully";
     }

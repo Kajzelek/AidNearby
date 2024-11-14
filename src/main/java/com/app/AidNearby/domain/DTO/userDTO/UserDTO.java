@@ -1,5 +1,6 @@
 package com.app.AidNearby.domain.DTO.userDTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,7 @@ public class UserDTO {
     private String phoneNumber;
     private String address;
     private Float subsidarityAvgRating;
+    private String role;
+    @JsonProperty("isNewUser")
+    private boolean isNewUser;
 }
