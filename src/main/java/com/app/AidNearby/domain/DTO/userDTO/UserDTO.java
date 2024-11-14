@@ -14,6 +14,7 @@ import java.util.UUID;
 @Builder
 public class UserDTO {
     private UUID userId;
+    private String role; // not sure about that
     private String firstName;
     private String lastName;
     private String phoneNumber;
