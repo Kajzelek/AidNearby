@@ -20,7 +20,6 @@ public class UserDTO {
     private String phoneNumber;
     private String address;
     private Float subsidarityAvgRating;
-    private String role;
     @JsonProperty("isNewUser")
     private boolean isNewUser;
 }

@@ -24,7 +24,6 @@ public class AdCategoryEntity {
     private String categoryName;
     private String categoryDescription;
     private String categoryIcon;
-
     @OneToMany(mappedBy = "adCategory")
     private List<AdEntity> categoryAds;
 }
