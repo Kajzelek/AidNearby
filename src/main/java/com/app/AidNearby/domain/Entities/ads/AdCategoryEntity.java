@@ -1,9 +1,6 @@
 package com.app.AidNearby.domain.Entities.ads;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +17,11 @@ import java.util.UUID;
 @Table(name = "ad_categories")
 public class AdCategoryEntity {
     @Id
+    @GeneratedValue(generator = "UUID")
     private UUID adCategoryId;
     private String categoryName;
     private String categoryDescription;
     private String categoryIcon;
-    @OneToMany(mappedBy = "adCategory")
+    @OneToMany(mappedBy = "adCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AdEntity> categoryAds;
 }

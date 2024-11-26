@@ -13,8 +13,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class AdDTO {
-    private UUID adId;
-    private UUID userId;
+    /*private UUID adId;
+    private UUID userId;*/
     private String adTitle;
     private AdCategoryEntity adCategory;
     private String adDescription;

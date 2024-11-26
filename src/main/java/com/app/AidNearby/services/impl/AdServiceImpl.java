@@ -4,12 +4,15 @@ import com.app.AidNearby.domain.DTO.adsDTO.AdDTO;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
 import com.app.AidNearby.mappers.impl.AdMapper;
+import com.app.AidNearby.repository.AdCategoryRepository;
 import com.app.AidNearby.repository.AdRepository;
 import com.app.AidNearby.repository.UserRepository;
 import com.app.AidNearby.services.servicesInterfaces.AdService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.util.UUID;
 
 
@@ -19,18 +22,23 @@ public class AdServiceImpl implements AdService {
 
     private UserRepository userRepository;
     private AdRepository adRepository;
+    private AdCategoryRepository adCategoryRepository;
     private AdMapper adMapper;
 
     @Override
+    @Transactional
     public AdDTO createAd(AdDTO adDTO, UUID userId) {
 
-        UserEntity userEntity = userRepository.findById(userId).orElse(null);
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
         AdEntity adEntity = adMapper.mapToEntity(adDTO);
+        adEntity.setUser(userEntity);
 
-        adEntity.builder()
-                .user(userEntity)
-                .build();
+        // Save the AdCategoryEntity if it is not already saved
+        /*if (adEntity.getAdCategory() != null && adEntity.getAdCategory().getAdCategoryId() == null) {
+            adEntity.setAdCategory(adCategoryRepository.save(adEntity.getAdCategory()));
+        }*/
 
         AdEntity savedAd = adRepository.save(adEntity);
         return adMapper.mapToDto(savedAd);

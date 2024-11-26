@@ -4,7 +4,9 @@ import com.app.AidNearby.domain.DTO.adsDTO.AdCategoryDTO;
 import com.app.AidNearby.domain.Entities.ads.AdCategoryEntity;
 import com.app.AidNearby.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdCategoryMapper implements Mapper<AdCategoryEntity, AdCategoryDTO> {
 
     private final ModelMapper mapper;

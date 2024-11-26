@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/ads")
 public class AdController {
     private final AdServiceImpl adService;
