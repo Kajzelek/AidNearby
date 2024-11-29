@@ -19,12 +19,19 @@ public class AdEntity {
     @GeneratedValue(generator = "UUID")
     private UUID adId;
     private String adTitle;
-    @ManyToOne
-    private AdCategoryEntity adCategory;
+    /*@ManyToOne
+    private AdCategoryEntity adCategory;*/
+
+    private String adCategory;
     private String adDescription;
     private String adLocation;
+    private Double latitude;
+    private Double longitude;
     private String adStatus;
     private Date createdAt;
+
+    @Lob
+    private byte[] adImage;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

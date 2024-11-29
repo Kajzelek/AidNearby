@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class AdController {
     private final JWTserviceImpl JWTserviceImpl;
 
     @PostMapping("/createAd")
-    public ResponseEntity<AdDTO> createAd(@RequestBody AdDTO adDTO, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<AdDTO> createAd(@RequestBody AdDTO adDTO, @RequestHeader("Authorization") String token) throws IOException {
         UUID userId = JWTserviceImpl.extractSpecifiedClaim(token, "userId");
         AdDTO ad = adService.createAd(adDTO, userId);
         return new ResponseEntity<>(ad, HttpStatus.CREATED);

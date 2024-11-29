@@ -4,24 +4,43 @@ import com.app.AidNearby.domain.DTO.adsDTO.AdDTO;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
 import com.app.AidNearby.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.Base64;
+
 @Component
-public class AdMapper implements Mapper<AdEntity, AdDTO> {
-    private final ModelMapper mapper;
+public class AdMapper {
 
-    public AdMapper(ModelMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    @Override
+    // Mapowanie z AdEntity do AdDTO
     public AdDTO mapToDto(AdEntity adEntity) {
-        return mapper.map(adEntity, AdDTO.class);
+        return AdDTO.builder()
+                .adTitle(adEntity.getAdTitle())
+                .adCategory(adEntity.getAdCategory())
+                .adDescription(adEntity.getAdDescription())
+                .adLocation(adEntity.getAdLocation())
+                .latitude(adEntity.getLatitude())
+                .longitude(adEntity.getLongitude())
+                .adStatus(adEntity.getAdStatus())
+                /*.adImage(adEntity.getAdImage() != null
+                        ? Base64.getEncoder().encodeToString(adEntity.getAdImage())
+                        : null)*/
+                .build();
     }
 
-    @Override
-    public AdEntity mapToEntity(AdDTO adDTO) {
-        return mapper.map(adDTO, AdEntity.class);
-    }
+    public AdEntity mapToEntity(AdDTO adDTO) throws IOException {
+        AdEntity adEntity = new AdEntity();
+        adEntity.setAdTitle(adDTO.getAdTitle());
+        adEntity.setAdCategory(adDTO.getAdCategory());
+        adEntity.setAdDescription(adDTO.getAdDescription());
+        adEntity.setAdLocation(adDTO.getAdLocation());
+        adEntity.setLatitude(adDTO.getLatitude());
+        adEntity.setLongitude(adDTO.getLongitude());
+        adEntity.setAdStatus(adDTO.getAdStatus());
 
+
+        // Obraz ustawiany w serwisie
+        return adEntity;
+    }
 }

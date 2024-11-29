@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -14,8 +15,12 @@ import java.util.UUID;
 @Builder
 public class AdDTO {
     private String adTitle;
-    private AdCategoryEntity adCategory;
+    private String adCategory;
     private String adDescription;
     private String adLocation;
+    private Double latitude;
+    private Double longitude;
     private String adStatus;
+    private MultipartFile adImage;
+//  private String adImage;
 }
