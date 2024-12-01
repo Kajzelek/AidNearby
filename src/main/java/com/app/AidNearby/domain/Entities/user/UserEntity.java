@@ -33,6 +33,8 @@ public class UserEntity {
     private String lastName;
     private String phoneNumber;
     private String address;
+    private Double latitude;
+    private Double longitude;
     private Float subsidarityAvgRating;
     private String profilePicture;
     private String bio;

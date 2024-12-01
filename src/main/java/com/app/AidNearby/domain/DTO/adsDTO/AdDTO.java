@@ -21,6 +21,7 @@ public class AdDTO {
     private Double latitude;
     private Double longitude;
     private String adStatus;
-    private MultipartFile adImage;
-//  private String adImage;
+
+    //private String imagePath;
+    //private String adImage;
 }

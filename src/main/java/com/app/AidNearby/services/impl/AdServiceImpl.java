@@ -11,11 +11,14 @@ import com.app.AidNearby.services.servicesInterfaces.AdService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.beans.Transient;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,6 +29,7 @@ public class AdServiceImpl implements AdService {
     private AdRepository adRepository;
     private final GeocodingService geocodingService;
     private AdMapper adMapper;
+    private final FileStorageService fileStorageService;
 
 
     @Override
@@ -37,22 +41,8 @@ public class AdServiceImpl implements AdService {
 
         AdEntity adEntity = adMapper.mapToEntity(adDTO);
         adEntity.setUser(userEntity);
-        adEntity.setAdImage(adDTO.getAdImage().getBytes());
 
-        /*if (adDTO.getAdImage() != null) {
-            try {
-                // Improved Base64 validation
-                if (adDTO.getAdImage().matches("^[A-Za-z0-9+/]+={0,2}$")) {
-                    byte[] decodedImage = Base64.getDecoder().decode(adDTO.getAdImage());
-                    adEntity.setAdImage(decodedImage);
-                } else {
-                    throw new IllegalArgumentException("Invalid Base64 image data");
-                }
-            } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Failed to decode Base64 image data", e);
-            }
-        }*/
-
+        // Obsługa lokalizacji
         if (adDTO.getAdLocation() != null && !adDTO.getAdLocation().isEmpty()) {
             double[] coordinates = geocodingService.getCoordinates(adDTO.getAdLocation());
             adEntity.setLatitude(coordinates[0]);
@@ -65,7 +55,21 @@ public class AdServiceImpl implements AdService {
             adEntity.setLongitude(adDTO.getLongitude());
         }
 
+        // Obsługa pliku (jeśli został przesłany)
+        /*if (file != null && !file.isEmpty()) {
+            String filePath = fileStorageService.storeFile(file);
+            adEntity.setImagePath(filePath); // Zakładamy, że encja ma pole na ścieżkę do pliku
+        }*/
+
         AdEntity savedAd = adRepository.save(adEntity);
         return adMapper.mapToDto(savedAd);
     }
+
+    @Override
+    public List<AdDTO> searchAds(String category, Double latitude, Double longitude, Double radius) {
+        List<AdEntity> ads = adRepository.findAdsByCategoryAndDistance(category, latitude, longitude, radius);
+        return ads.stream().map(adMapper::mapToDto).collect(Collectors.toList());
+    }
+
+
 }

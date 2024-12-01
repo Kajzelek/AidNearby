@@ -16,6 +16,8 @@ public class ProfileDataDTO {
     private String lastName;
     private String phoneNumber;
     private String address;
+    private Double latitude;
+    private Double longitude;
     private String profilePicture;
     private String bio;
     private int age;

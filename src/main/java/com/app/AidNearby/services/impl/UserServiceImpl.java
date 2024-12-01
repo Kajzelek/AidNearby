@@ -22,6 +22,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private final GeocodingService geocodingService;
 
     @Override
     public Set<ApprovedAdsDTO> getAidsProvided(UUID userId) {
@@ -42,14 +43,29 @@ public class UserServiceImpl implements UserService {
     public String fillOutProfile(ProfileDataDTO profileDataDTO, UUID userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found by ID"));
 
+
         userEntity.setFirstName(profileDataDTO.getFirstName());
         userEntity.setLastName(profileDataDTO.getLastName());
         userEntity.setPhoneNumber(profileDataDTO.getPhoneNumber());
-        userEntity.setAddress(profileDataDTO.getAddress());
+        //userEntity.setAddress(profileDataDTO.getAddress());
+        userEntity.setLatitude(profileDataDTO.getLatitude());
+        userEntity.setLongitude(profileDataDTO.getLongitude());
         userEntity.setProfilePicture(profileDataDTO.getProfilePicture());
         userEntity.setBio(profileDataDTO.getBio());
         userEntity.setAge(profileDataDTO.getAge());
         userEntity.setInterests(profileDataDTO.getInterests());
+
+        if (profileDataDTO.getAddress() != null && !profileDataDTO.getAddress().isEmpty()) {
+            double[] coordinates = geocodingService.getCoordinates(profileDataDTO.getAddress());
+            userEntity.setLatitude(coordinates[0]);
+            userEntity.setLongitude(coordinates[1]);
+        }
+
+        // Jeśli użytkownik podał współrzędne, bezpośrednio je zapisuj
+        if (profileDataDTO.getLatitude() != null && profileDataDTO.getLongitude() != null) {
+            userEntity.setLatitude(profileDataDTO.getLatitude());
+            userEntity.setLongitude(profileDataDTO.getLongitude());
+        }
 
         userEntity.setIsNewUser(false);
         userRepository.save(userEntity);
