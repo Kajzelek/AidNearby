@@ -23,6 +23,7 @@ public class AdMapper {
                 .latitude(adEntity.getLatitude())
                 .longitude(adEntity.getLongitude())
                 .adStatus(adEntity.getAdStatus())
+                .adId(adEntity.getAdId())
                 //.imagePath(adEntity.getImagePath())
                 .build();
     }

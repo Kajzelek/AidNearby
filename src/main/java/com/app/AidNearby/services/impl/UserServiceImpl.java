@@ -47,9 +47,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setFirstName(profileDataDTO.getFirstName());
         userEntity.setLastName(profileDataDTO.getLastName());
         userEntity.setPhoneNumber(profileDataDTO.getPhoneNumber());
-        //userEntity.setAddress(profileDataDTO.getAddress());
-        userEntity.setLatitude(profileDataDTO.getLatitude());
-        userEntity.setLongitude(profileDataDTO.getLongitude());
+        userEntity.setAddress(profileDataDTO.getAddress());
         userEntity.setProfilePicture(profileDataDTO.getProfilePicture());
         userEntity.setBio(profileDataDTO.getBio());
         userEntity.setAge(profileDataDTO.getAge());

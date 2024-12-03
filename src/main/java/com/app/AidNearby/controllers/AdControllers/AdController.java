@@ -5,6 +5,8 @@ import com.app.AidNearby.mappers.impl.AdMapper;
 import com.app.AidNearby.services.impl.AdServiceImpl;
 import com.app.AidNearby.services.impl.JWTserviceImpl;
 import lombok.AllArgsConstructor;
+import org.hibernate.query.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,4 +44,6 @@ public class AdController {
         List<AdDTO> ads = adService.searchAds(category, latitude, longitude, radius);
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
+
+
 }

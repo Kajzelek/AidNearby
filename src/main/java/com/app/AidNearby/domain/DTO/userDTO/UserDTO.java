@@ -19,6 +19,8 @@ public class UserDTO {
     private String lastName;
     private String phoneNumber;
     private String address;
+    private Double latitude;
+    private Double longitude;
     private Float subsidarityAvgRating;
     @JsonProperty("isNewUser")
     private boolean isNewUser;

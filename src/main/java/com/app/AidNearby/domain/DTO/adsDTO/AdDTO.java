@@ -14,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class AdDTO {
+    private UUID adId;
     private String adTitle;
     private String adCategory;
     private String adDescription;
