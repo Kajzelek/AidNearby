@@ -29,4 +29,21 @@ public class GeocodingService {
 
         return new double[]{location.getDouble("lat"), location.getDouble("lng")};
     }
+
+    public String getAddress(double latitude, double longitude) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = GEOCODING_API_URL + "?latlng=" + latitude + "," + longitude + "&key=" + API_KEY;
+
+        String response = restTemplate.getForObject(url, String.class);
+        JSONObject jsonResponse = new JSONObject(response);
+
+        if (!jsonResponse.getString("status").equals("OK")) {
+            throw new RuntimeException("Failed to get address for coordinates: " + latitude + ", " + longitude);
+        }
+
+        return jsonResponse
+                .getJSONArray("results")
+                .getJSONObject(0)
+                .getString("formatted_address");
+    }
 }

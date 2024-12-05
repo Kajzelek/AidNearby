@@ -45,5 +45,11 @@ public class AdController {
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
 
+    @GetMapping("/{adId}")
+    public ResponseEntity<AdDTO> getAdById(@PathVariable UUID adId) {
+        AdDTO ad = adService.getAdById(adId);
+        return new ResponseEntity<>(ad, HttpStatus.OK);
+    }
+
 
 }

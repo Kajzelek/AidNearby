@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
         if (profileDataDTO.getLatitude() != null && profileDataDTO.getLongitude() != null) {
             userEntity.setLatitude(profileDataDTO.getLatitude());
             userEntity.setLongitude(profileDataDTO.getLongitude());
+            userEntity.setAddress(geocodingService.getAddress(profileDataDTO.getLatitude(), profileDataDTO.getLongitude()));
         }
 
         userEntity.setIsNewUser(false);

@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface AdService {
     AdDTO createAd(AdDTO adDTO, UUID userId) throws IOException;
     List<AdDTO> searchAds(String category, Double latitude, Double longitude, Double radius);
+    AdDTO getAdById(UUID adId);
 }

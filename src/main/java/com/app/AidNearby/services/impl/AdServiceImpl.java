@@ -47,12 +47,14 @@ public class AdServiceImpl implements AdService {
             double[] coordinates = geocodingService.getCoordinates(adDTO.getAdLocation());
             adEntity.setLatitude(coordinates[0]);
             adEntity.setLongitude(coordinates[1]);
+
         }
 
         // Jeśli użytkownik podał współrzędne, bezpośrednio je zapisuj
         if (adDTO.getLatitude() != null && adDTO.getLongitude() != null) {
             adEntity.setLatitude(adDTO.getLatitude());
             adEntity.setLongitude(adDTO.getLongitude());
+            adEntity.setAdLocation(geocodingService.getAddress(adDTO.getLatitude(), adDTO.getLongitude()));
         }
 
         // Obsługa pliku (jeśli został przesłany)
@@ -71,5 +73,11 @@ public class AdServiceImpl implements AdService {
         return ads.stream().map(adMapper::mapToDto).collect(Collectors.toList());
     }
 
+    @Override
+    public AdDTO getAdById(UUID adId) {
+        AdEntity adEntity = adRepository.findById(adId)
+                .orElseThrow(() -> new RuntimeException("Ad not found with ID: " + adId));
+        return adMapper.mapToDto(adEntity);
+    }
 
 }

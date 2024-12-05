@@ -26,8 +26,8 @@ public class AdApplicationEntity {
     private String applicationStatus;
     private Date submittedAt;
     private Date createdAt;
-    private String userMessage;
-    private Boolean isApproved;
+    private String userMessage; //OPCJONALNE SKORO MAJĄ BYĆ WIADOMOŚCI
+    //private Boolean isApproved; OPCJONALNE
 
     @ManyToOne
     @JoinColumn(name = "applicant_user_id")
@@ -36,6 +36,6 @@ public class AdApplicationEntity {
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
+        applicationStatus = "ROZPATRYWANE";
     }
-
 }
