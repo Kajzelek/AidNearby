@@ -1,16 +1,13 @@
 package com.app.AidNearby.controllers.AdControllers;
 
 import com.app.AidNearby.domain.DTO.adsDTO.AdDTO;
-import com.app.AidNearby.mappers.impl.AdMapper;
 import com.app.AidNearby.services.impl.AdServiceImpl;
 import com.app.AidNearby.services.impl.JWTserviceImpl;
 import lombok.AllArgsConstructor;
-import org.hibernate.query.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.IOException;
 import java.util.List;

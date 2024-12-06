@@ -1,6 +1,7 @@
 package com.app.AidNearby.repository;
 
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
+import com.app.AidNearby.domain.Entities.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,8 @@ import java.util.UUID;
 
 public interface AdRepository extends JpaRepository<AdEntity, UUID> {
     //AdEntity findByTitle(String title);
+
+    AdEntity findByAdId(UUID adId);
 
     @Query("SELECT a FROM AdEntity a " +
             "WHERE a.adCategory = :category " +

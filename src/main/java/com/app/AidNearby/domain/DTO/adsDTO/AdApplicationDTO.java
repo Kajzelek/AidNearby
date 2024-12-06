@@ -13,10 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class AdApplicationDTO {
-    private UUID userId;
     private UUID adId;
-    private String applicationStatus;
     private Date submittedAt;
     private String userMessage;
-    private Boolean isApproved;
 }
