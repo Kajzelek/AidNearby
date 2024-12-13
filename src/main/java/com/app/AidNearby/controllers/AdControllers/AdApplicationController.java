@@ -2,7 +2,6 @@ package com.app.AidNearby.controllers.AdControllers;
 
 
 import com.app.AidNearby.domain.DTO.adsDTO.AdApplicationDTO;
-import com.app.AidNearby.domain.Entities.ads.AdApplicationEntity;
 import com.app.AidNearby.services.impl.JWTserviceImpl;
 import com.app.AidNearby.services.servicesInterfaces.AdApplicationService;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -43,6 +41,12 @@ public class AdApplicationController {
                                                                     @RequestHeader("Authorization") String token) {
         UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
         List<AdApplicationDTO> adApplications = adApplicationService.getAdApplications(adId, userId);
+        return new ResponseEntity<>(adApplications, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAdApplicationsByUserId/{userId}")
+    public ResponseEntity<List<AdApplicationDTO>> getAdApplicationsByUserId(@PathVariable UUID userId) {
+        List<AdApplicationDTO> adApplications = adApplicationService.getAdApplicationsByAdCreatorId(userId);
         return new ResponseEntity<>(adApplications, HttpStatus.OK);
     }
 
