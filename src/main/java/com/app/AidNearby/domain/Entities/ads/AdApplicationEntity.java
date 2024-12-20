@@ -21,6 +21,7 @@ public class AdApplicationEntity {
     @GeneratedValue(generator = "UUID")
     private UUID adApplicationId;
     private UUID adId;
+    private String adTitle;
     @Column(name = "ad_creator_id")
     private UUID userId;
     private String applicationStatus;

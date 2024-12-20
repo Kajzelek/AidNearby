@@ -11,8 +11,12 @@ public interface AdApplicationService {
 
     String deleteAdApplication(UUID adApplicationId, UUID userId);
 
-    List<AdApplicationDTO> getAdApplications(UUID adId, UUID userId);
+    List<AdApplicationDTO> getAdApplicationsByAdId(UUID adId);
+
+    List<AdApplicationDTO> getAdApplicationsByUserIdAndStatus(UUID userId, String status);
+
+    /*List<AdApplicationDTO> getAdApplications(UUID adId, UUID userId);
 
     List<AdApplicationDTO> getAdApplicationsByAdCreatorId(UUID userId);
-
+*/
 }

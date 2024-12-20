@@ -27,16 +27,20 @@ public class AdApplicationMapper {
     public AdApplicationDTO mapToDto(AdApplicationEntity adApplicationEntity) {
         return AdApplicationDTO.builder()
                 .adId(adApplicationEntity.getAdId())
-                .submittedAt(adApplicationEntity.getSubmittedAt())
+                .createdAt(adApplicationEntity.getCreatedAt())
                 .userMessage(adApplicationEntity.getUserMessage())
+                .application_status(adApplicationEntity.getApplicationStatus())
+                .adTitle(adApplicationEntity.getAdTitle())
                 .build();
     }
 
     public AdApplicationEntity mapToEntity(AdApplicationDTO adApplicationDTO) {
         AdApplicationEntity adApplicationEntity = new AdApplicationEntity();
         adApplicationEntity.setAdId(adApplicationDTO.getAdId());
-        adApplicationEntity.setSubmittedAt(adApplicationDTO.getSubmittedAt());
+        adApplicationEntity.setCreatedAt(adApplicationDTO.getCreatedAt());
         adApplicationEntity.setUserMessage(adApplicationDTO.getUserMessage());
+        adApplicationEntity.setApplicationStatus(adApplicationDTO.getApplication_status());
+        adApplicationEntity.setAdTitle(adApplicationDTO.getAdTitle());
         return adApplicationEntity;
     }
 }

@@ -48,5 +48,13 @@ public class AdController {
         return new ResponseEntity<>(ad, HttpStatus.OK);
     }
 
+    @GetMapping("/getAdsByUserId")
+    public ResponseEntity<List<AdDTO>> getAdsByStatus(@RequestParam String status,
+                                                      @RequestHeader("Authorization") String token) {
+        UUID userId = JWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        List<AdDTO> ads = adService.getAdsByStatusAndUserId(status, userId);
+        return new ResponseEntity<>(ads, HttpStatus.OK);
+    }
+
 
 }

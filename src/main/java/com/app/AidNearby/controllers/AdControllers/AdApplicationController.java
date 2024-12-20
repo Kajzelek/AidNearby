@@ -2,6 +2,7 @@ package com.app.AidNearby.controllers.AdControllers;
 
 
 import com.app.AidNearby.domain.DTO.adsDTO.AdApplicationDTO;
+import com.app.AidNearby.services.impl.AdApplicationServiceImpl;
 import com.app.AidNearby.services.impl.JWTserviceImpl;
 import com.app.AidNearby.services.servicesInterfaces.AdApplicationService;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/adApplications")
 public class AdApplicationController {
-    private final AdApplicationService adApplicationService;
+    private final AdApplicationServiceImpl adApplicationService;
     private final JWTserviceImpl jWTserviceImpl;
 
     @PostMapping("/createAdApplication")
@@ -36,7 +37,22 @@ public class AdApplicationController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/getAdApplications/{adId}")
+    @GetMapping("/{adId}")
+    public ResponseEntity<List<AdApplicationDTO>> getAdApplicationsByAdId(@PathVariable UUID adId) {
+        List<AdApplicationDTO> adApplications = adApplicationService.getAdApplicationsByAdId(adId);
+        return new ResponseEntity<>(adApplications, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AdApplicationDTO>> getAdApplicationsByUserIdAndStatus(
+            @RequestParam("status") String status,
+            @RequestHeader("Authorization") String token) {
+        UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        List<AdApplicationDTO> adApplications = adApplicationService.getAdApplicationsByUserIdAndStatus(userId, status);
+        return new ResponseEntity<>(adApplications, HttpStatus.OK);
+    }
+
+    /*@GetMapping("/getAdApplications/{adId}")
     public ResponseEntity<List<AdApplicationDTO>> getAdApplications(@PathVariable UUID adId,
                                                                     @RequestHeader("Authorization") String token) {
         UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
@@ -55,7 +71,7 @@ public class AdApplicationController {
         UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
         List<AdApplicationDTO> adApplications = adApplicationService.getAdApplicationsByAdCreatorId(userId);
         return new ResponseEntity<>(adApplications, HttpStatus.OK);
-    }
+    }*/
 
 
 }

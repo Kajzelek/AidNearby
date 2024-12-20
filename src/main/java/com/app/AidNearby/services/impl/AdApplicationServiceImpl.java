@@ -40,7 +40,9 @@ public class AdApplicationServiceImpl implements AdApplicationService {
 
         adApplicationEntity.setUserId(adEntity.getUser().getUserId());
         adApplicationEntity.setUser(userEntity); //?
+        adApplicationEntity.setAdTitle(adEntity.getAdTitle());
         AdApplicationEntity savedEntity = adApplicationRepository.save(adApplicationEntity);
+
         return adApplicationMapper.mapToDto(savedEntity);
     }
 
@@ -58,6 +60,24 @@ public class AdApplicationServiceImpl implements AdApplicationService {
     }
 
     @Override
+    public List<AdApplicationDTO> getAdApplicationsByAdId(UUID adId) {
+        List<AdApplicationEntity> adApplications = adApplicationRepository.findAllByAdId(adId);
+        return adApplications.stream()
+                .map(adApplicationMapper::mapToDto)
+                .toList();
+    }
+
+    @Override
+    public List<AdApplicationDTO> getAdApplicationsByUserIdAndStatus(UUID userId, String status) {
+        List<AdApplicationEntity> adApplications = adApplicationRepository.findByUserIdAndStatus(userId, status);
+        return adApplications.stream()
+                .map(adApplicationMapper::mapToDto)
+                .toList();
+    }
+
+
+
+   /* @Override
     public List<AdApplicationDTO> getAdApplications(UUID adId, UUID userId) {
         return adApplicationRepository.findByAdIdAndUserId(adId, userId)
                 .stream()
@@ -71,6 +91,6 @@ public class AdApplicationServiceImpl implements AdApplicationService {
                 .stream()
                 .map(adApplicationMapper::mapToDto)
                 .collect(Collectors.toList());
-    }
+    }*/
 
 }

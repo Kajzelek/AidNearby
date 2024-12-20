@@ -10,9 +10,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AdRepository extends JpaRepository<AdEntity, UUID> {
-    //AdEntity findByTitle(String title);
 
     AdEntity findByAdId(UUID adId);
+
+    //List<AdEntity> findByAdStatusAndUserId(String status, UUID userId);
+
+    @Query("SELECT a FROM AdEntity a WHERE a.user.id = :userId AND a.adStatus = :status")
+    List<AdEntity> findByAdStatusAndUserId(@Param("status") String status, @Param("userId") UUID userId);
 
     @Query("SELECT a FROM AdEntity a " +
             "WHERE a.adCategory = :category " +

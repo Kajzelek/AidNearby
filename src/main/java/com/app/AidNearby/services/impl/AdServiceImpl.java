@@ -36,6 +36,8 @@ public class AdServiceImpl implements AdService {
     @Transactional
     public AdDTO createAd(AdDTO adDTO, UUID userId) throws IOException {
 
+        System.out.println("AdDTO: " + adDTO);
+
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
@@ -45,6 +47,7 @@ public class AdServiceImpl implements AdService {
         // Obsługa lokalizacji
         if (adDTO.getAdLocation() != null && !adDTO.getAdLocation().isEmpty()) {
             double[] coordinates = geocodingService.getCoordinates(adDTO.getAdLocation());
+            System.out.println("Coordinates: " + coordinates[0] + ", " + coordinates[1]);
             adEntity.setLatitude(coordinates[0]);
             adEntity.setLongitude(coordinates[1]);
 
@@ -79,5 +82,14 @@ public class AdServiceImpl implements AdService {
                 .orElseThrow(() -> new RuntimeException("Ad not found with ID: " + adId));
         return adMapper.mapToDto(adEntity);
     }
+
+    @Override
+    public List<AdDTO> getAdsByStatusAndUserId(String status, UUID userId) {
+        List<AdEntity> ads = adRepository.findByAdStatusAndUserId(status, userId);
+        return ads.stream()
+                .map(adMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
 
 }

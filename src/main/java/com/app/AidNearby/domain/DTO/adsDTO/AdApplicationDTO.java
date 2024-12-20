@@ -14,6 +14,9 @@ import java.util.UUID;
 @Builder
 public class AdApplicationDTO {
     private UUID adId;
-    private Date submittedAt;
+    private String adTitle;
+    private Date createdAt;
     private String userMessage;
+    private String application_status;
+
 }
