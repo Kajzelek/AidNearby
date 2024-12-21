@@ -24,6 +24,7 @@ public class AdEntity {
     private AdCategoryEntity adCategory;*/
 
     private String adCategory;
+    private String helpType;
     private String adDescription;
     private String adLocation;
     private Double latitude;
@@ -42,5 +43,6 @@ public class AdEntity {
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
+        adStatus = "ACTIVE";
     }
 }

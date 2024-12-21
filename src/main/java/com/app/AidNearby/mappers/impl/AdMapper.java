@@ -22,8 +22,9 @@ public class AdMapper {
                 .adLocation(adEntity.getAdLocation())
                 .latitude(adEntity.getLatitude())
                 .longitude(adEntity.getLongitude())
-                .adStatus(adEntity.getAdStatus())
+                //.adStatus(adEntity.getAdStatus())
                 .adId(adEntity.getAdId())
+                .helpType(adEntity.getHelpType())
                 //.imagePath(adEntity.getImagePath())
                 .build();
     }
@@ -36,7 +37,8 @@ public class AdMapper {
         adEntity.setAdLocation(adDTO.getAdLocation());
         adEntity.setLatitude(adDTO.getLatitude());
         adEntity.setLongitude(adDTO.getLongitude());
-        adEntity.setAdStatus(adDTO.getAdStatus());
+        //adEntity.setAdStatus(adDTO.getAdStatus());
+        adEntity.setHelpType(adDTO.getHelpType());
         //adEntity.setImagePath(adDTO.getImagePath());
 
         // Obraz ustawiany w serwisie

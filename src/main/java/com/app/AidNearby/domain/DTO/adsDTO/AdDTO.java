@@ -16,13 +16,14 @@ import java.util.UUID;
 public class AdDTO {
     private UUID adId;
     private String adTitle;
+    private String helpType;
     private String adCategory;
     private String adDescription;
     private String adLocation;
     private Double latitude;
     private Double longitude;
-    private String adStatus;
 
+    //private String adStatus;
     //private String imagePath;
     //private String adImage;
 }
