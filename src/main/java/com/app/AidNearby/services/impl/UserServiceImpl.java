@@ -6,6 +6,7 @@ import com.app.AidNearby.domain.DTO.userDTO.ProfileDataDTO;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
 import com.app.AidNearby.mappers.impl.AdMapper;
+import com.app.AidNearby.mappers.impl.ProfileDataMapper;
 import com.app.AidNearby.mappers.impl.UserMapper;
 import com.app.AidNearby.repository.AdRepository;
 import com.app.AidNearby.repository.UserRepository;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private final GeocodingService geocodingService;
+    private final ProfileDataMapper profileDataMapper;
 
     @Override
     public Set<ApprovedAdsDTO> getAidsProvided(UUID userId) {
@@ -70,5 +72,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
         return "Profile filled out successfully";
     }
+
+    @Override
+    public ProfileDataDTO getProfile(UUID userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found by ID"));
+        return profileDataMapper.mapToDto(userEntity);
+    }
+
+
 
 }

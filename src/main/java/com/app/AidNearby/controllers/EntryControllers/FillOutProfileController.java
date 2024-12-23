@@ -28,4 +28,10 @@ public class FillOutProfileController {
         String response = userServiceImpl.fillOutProfile(profileDataDTO, userId);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @GetMapping("/getProfile")
+    public ResponseEntity<?> getProfile(@RequestParam("userId") UUID userId){
+        ProfileDataDTO profileDataDTO = userServiceImpl.getProfile(userId);
+        return new ResponseEntity<>(profileDataDTO, HttpStatus.OK);
+    }
 }

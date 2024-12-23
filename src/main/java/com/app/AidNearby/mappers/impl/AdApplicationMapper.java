@@ -27,10 +27,15 @@ public class AdApplicationMapper {
     public AdApplicationDTO mapToDto(AdApplicationEntity adApplicationEntity) {
         return AdApplicationDTO.builder()
                 .adId(adApplicationEntity.getAdId())
+                .adApplicationId(adApplicationEntity.getAdApplicationId())
                 .createdAt(adApplicationEntity.getCreatedAt())
                 .userMessage(adApplicationEntity.getUserMessage())
                 .application_status(adApplicationEntity.getApplicationStatus())
                 .adTitle(adApplicationEntity.getAdTitle())
+                .applicantId(adApplicationEntity.getUser().getUserId())
+                .task_progress(adApplicationEntity.getTask_progress())
+                .submittedAt(adApplicationEntity.getSubmittedAt())
+                .finishedAt(adApplicationEntity.getFinishedAt())
                 .build();
     }
 

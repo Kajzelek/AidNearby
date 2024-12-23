@@ -12,4 +12,5 @@ public interface UserService {
     Set<ApprovedAdsDTO> getActiveAids(UUID userId);
     Set<ApprovedAdsDTO> getCompletedAids(UUID userId);
     String fillOutProfile(ProfileDataDTO profileDataDTO, UUID userId);
+    ProfileDataDTO getProfile(UUID userId);
 }

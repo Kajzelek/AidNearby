@@ -52,6 +52,14 @@ public class AdApplicationController {
         return new ResponseEntity<>(adApplications, HttpStatus.OK);
     }
 
+    @PutMapping
+    public ResponseEntity<AdApplicationDTO> updateAdApplicationStatus(@RequestBody AdApplicationDTO adApplicationDTO,
+                                                                      @RequestHeader("Authorization") String token) {
+        UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        AdApplicationDTO updatedAdApplication = adApplicationService.updateAdApplicationStatus(adApplicationDTO, userId);
+        return new ResponseEntity<>(updatedAdApplication, HttpStatus.OK);
+    }
+
     /*@GetMapping("/getAdApplications/{adId}")
     public ResponseEntity<List<AdApplicationDTO>> getAdApplications(@PathVariable UUID adId,
                                                                     @RequestHeader("Authorization") String token) {

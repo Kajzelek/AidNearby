@@ -15,6 +15,8 @@ public interface AdApplicationService {
 
     List<AdApplicationDTO> getAdApplicationsByUserIdAndStatus(UUID userId, String status);
 
+    AdApplicationDTO updateAdApplicationStatus(AdApplicationDTO adApplicationDTO, UUID userId);
+
     /*List<AdApplicationDTO> getAdApplications(UUID adId, UUID userId);
 
     List<AdApplicationDTO> getAdApplicationsByAdCreatorId(UUID userId);

@@ -25,7 +25,9 @@ public class AdApplicationEntity {
     @Column(name = "ad_creator_id")
     private UUID userId;
     private String applicationStatus;
+    private String task_progress;
     private Date submittedAt;
+    private Date finishedAt;
     private Date createdAt;
     private String userMessage; //OPCJONALNE SKORO MAJĄ BYĆ WIADOMOŚCI
     //private Boolean isApproved; OPCJONALNE

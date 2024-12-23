@@ -13,7 +13,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -38,8 +40,11 @@ public class AdApplicationServiceImpl implements AdApplicationService {
 
         AdApplicationEntity adApplicationEntity = adApplicationMapper.mapToEntity(adApplicationDTO);
 
+        //Applicant user Id
         adApplicationEntity.setUserId(adEntity.getUser().getUserId());
+        //Ad creator Id
         adApplicationEntity.setUser(userEntity); //?
+
         adApplicationEntity.setAdTitle(adEntity.getAdTitle());
         AdApplicationEntity savedEntity = adApplicationRepository.save(adApplicationEntity);
 
@@ -73,6 +78,32 @@ public class AdApplicationServiceImpl implements AdApplicationService {
         return adApplications.stream()
                 .map(adApplicationMapper::mapToDto)
                 .toList();
+    }
+
+    @Override
+    public AdApplicationDTO updateAdApplicationStatus(AdApplicationDTO adApplicationDTO, UUID userId) {
+        AdApplicationEntity adApplicationEntity = adApplicationRepository.findById(adApplicationDTO.getAdApplicationId())
+                .orElseThrow(() -> new RuntimeException("Ad application not found with ID: " + adApplicationDTO.getAdApplicationId()));
+
+        if (!adApplicationEntity.getUserId().equals(userId)) {
+            throw new RuntimeException("User is not authorized to update this ad application");
+        }
+
+        adApplicationEntity.setApplicationStatus(adApplicationDTO.getApplication_status());
+
+
+        if(Objects.equals(adApplicationDTO.getApplication_status(), "ACCEPTED")){
+            adApplicationEntity.setSubmittedAt(new Date());
+            adApplicationEntity.setTask_progress("IN_PROGRESS");
+        }
+
+        if(Objects.equals(adApplicationDTO.getApplication_status(), "FINISHED")){
+            adApplicationEntity.setFinishedAt(new Date());
+        }
+
+        AdApplicationEntity updatedEntity = adApplicationRepository.save(adApplicationEntity);
+
+        return adApplicationMapper.mapToDto(updatedEntity);
     }
 
 
