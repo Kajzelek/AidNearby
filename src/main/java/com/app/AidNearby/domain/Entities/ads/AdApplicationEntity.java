@@ -1,5 +1,6 @@
 package com.app.AidNearby.domain.Entities.ads;
 
+import com.app.AidNearby.domain.Entities.reviews.ReviewEntity;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,9 @@ public class AdApplicationEntity {
     @ManyToOne
     @JoinColumn(name = "applicant_user_id")
     private UserEntity user;
+
+    @OneToOne(mappedBy = "adApplication")
+    private ReviewEntity review;
 
     @PrePersist
     public void prePersist() {

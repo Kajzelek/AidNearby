@@ -2,23 +2,26 @@ package com.app.AidNearby.mappers.impl;
 
 import com.app.AidNearby.domain.DTO.reviewsDTO.ReviewDTO;
 import com.app.AidNearby.domain.Entities.reviews.ReviewEntity;
-import com.app.AidNearby.mappers.Mapper;
-import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
-public class ReviewMapper implements Mapper<ReviewEntity, ReviewDTO> {
-    private final ModelMapper mapper;
-
-    public ReviewMapper(ModelMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    @Override
+@Component
+public class ReviewMapper{
     public ReviewDTO mapToDto(ReviewEntity reviewEntity) {
-        return mapper.map(reviewEntity, ReviewDTO.class);
+        return ReviewDTO.builder()
+                .adId(reviewEntity.getAdId())
+                .comment(reviewEntity.getComment())
+                .rating(reviewEntity.getRating())
+                .reviewId(reviewEntity.getReviewId())
+                .createdAt(reviewEntity.getCreatedAt())
+                .userId(reviewEntity.getUser().getUserId())
+                .ratedUserId(reviewEntity.getUserId())
+                .build();
     }
 
-    @Override
     public ReviewEntity mapToEntity(ReviewDTO reviewDTO) {
-        return mapper.map(reviewDTO, ReviewEntity.class);
+        ReviewEntity reviewEntity = new ReviewEntity();
+        reviewEntity.setComment(reviewDTO.getComment());
+        reviewEntity.setRating(reviewDTO.getRating());
+        return reviewEntity;
     }
 }

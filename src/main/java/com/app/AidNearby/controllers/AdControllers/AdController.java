@@ -42,6 +42,16 @@ public class AdController {
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
 
+    @GetMapping("/search/anyCategory")
+    public ResponseEntity<List<AdDTO>> searchAds(
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam Double radius) {
+
+        List<AdDTO> ads = adService.searchAds(latitude, longitude, radius);
+        return new ResponseEntity<>(ads, HttpStatus.OK);
+    }
+
     @GetMapping("/{adId}")
     public ResponseEntity<AdDTO> getAdById(@PathVariable UUID adId) {
         AdDTO ad = adService.getAdById(adId);
@@ -54,6 +64,14 @@ public class AdController {
         UUID userId = JWTserviceImpl.extractSpecifiedClaim(token, "userId");
         List<AdDTO> ads = adService.getAdsByStatusAndUserId(status, userId);
         return new ResponseEntity<>(ads, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteAd(@RequestParam UUID adId,
+                                           @RequestHeader("Authorization") String token) {
+        UUID userId = JWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        adService.deleteAd(adId, userId);
+        return new ResponseEntity<>("Ad deleted", HttpStatus.OK);
     }
 
 

@@ -13,8 +13,10 @@ import java.util.UUID;
 public interface AdService {
     AdDTO createAd(AdDTO adDTO, UUID userId) throws IOException;
     List<AdDTO> searchAds(String category, Double latitude, Double longitude, Double radius);
+    List<AdDTO> searchAds(Double latitude, Double longitude, Double radius);
     AdDTO getAdById(UUID adId);
     List<AdDTO> getAdsByStatusAndUserId(String status, UUID userId);
+    String deleteAd(UUID adId, UUID userId);
 
 
 }

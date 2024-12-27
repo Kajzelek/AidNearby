@@ -59,7 +59,7 @@ public class UserEntity {
         subsidarityAvgRating = 0.0f;
     }
 
-    //TODO: Add reviewList and favoritesAds whem they are implemented
+    //TODO: Add reviewList and favoritesAds when they are implemented
     //TODO: Add List of Applications related to the ADs (and status of them)
     //TODO: Add List of Ads that are in progress by user
     //TODO: Add List of user's Ads

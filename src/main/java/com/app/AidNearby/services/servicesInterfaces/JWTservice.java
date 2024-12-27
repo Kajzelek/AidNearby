@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 public interface JWTservice {
-    String generateToken(String username, UUID uuid, String ipAddress);
+    String generateToken(String username, UUID uuid, String ipAddress, Double latitude, Double longitude);
 
     boolean validateToken(String token, UserDetails userDetails);
 

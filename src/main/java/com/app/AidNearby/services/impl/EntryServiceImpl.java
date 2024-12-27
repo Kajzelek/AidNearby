@@ -59,7 +59,7 @@ public class EntryServiceImpl implements EntryService {
 
             if(authentication.isAuthenticated()) {
                 String ipAddress = request.getRemoteAddr();
-                String token = jwtService.generateToken(username,userEntity.getUserId(),ipAddress);
+                String token = jwtService.generateToken(username,userEntity.getUserId(),ipAddress,userEntity.getLatitude(),userEntity.getLongitude());
                 return new AuthResponseDTO(userMapper.mapToDto(userEntity), token);
             } else {
                 throw new IllegalArgumentException("Invalid credentials");

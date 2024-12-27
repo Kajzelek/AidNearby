@@ -34,10 +34,12 @@ public class JWTserviceImpl implements JWTservice {
 
 
     @Override
-    public String generateToken(String username, UUID uuid, String ipAddress) {
+    public String generateToken(String username, UUID uuid, String ipAddress, Double latitude, Double longitude) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", uuid);
         claims.put("ipAddress", ipAddress);
+        claims.put("latitude", latitude);
+        claims.put("longitude", longitude);
 
         return Jwts.builder().claims().add(claims).subject(username).issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000))
