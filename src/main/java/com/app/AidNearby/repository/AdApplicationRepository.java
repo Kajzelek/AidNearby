@@ -16,5 +16,9 @@ public interface AdApplicationRepository extends JpaRepository<AdApplicationEnti
     @Query("SELECT a FROM AdApplicationEntity a WHERE a.user.id = :userId AND a.applicationStatus = :status")
     List<AdApplicationEntity> findByUserIdAndStatus(@Param("userId") UUID userId, @Param("status") String status);
 
+    //boolean existsByUserIdAndAdId(UUID userId, UUID adId);
+
+    @Query("SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END FROM AdApplicationEntity a WHERE a.user.userId = :userId AND a.adId = :adId")
+    boolean existsByUserIdAndAdId(@Param("userId") UUID userId, @Param("adId") UUID adId);
 }
 

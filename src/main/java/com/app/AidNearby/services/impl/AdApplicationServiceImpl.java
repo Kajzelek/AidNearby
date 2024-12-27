@@ -106,6 +106,11 @@ public class AdApplicationServiceImpl implements AdApplicationService {
         return adApplicationMapper.mapToDto(updatedEntity);
     }
 
+    @Override
+    public boolean hasUserAppliedToAd(UUID userId, UUID adId) {
+        return adApplicationRepository.existsByUserIdAndAdId(userId, adId);
+    }
+
 
 
    /* @Override

@@ -15,6 +15,7 @@ import java.util.UUID;
 @Builder
 public class AdDTO {
     private UUID adId;
+    private UUID userId;
     private String adTitle;
     private String helpType;
     private String adCategory;

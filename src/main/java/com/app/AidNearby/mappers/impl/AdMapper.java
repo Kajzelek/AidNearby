@@ -25,6 +25,7 @@ public class AdMapper {
                 //.adStatus(adEntity.getAdStatus())
                 .adId(adEntity.getAdId())
                 .helpType(adEntity.getHelpType())
+                .userId(adEntity.getUser().getUserId())
                 //.imagePath(adEntity.getImagePath())
                 .build();
     }

@@ -60,6 +60,16 @@ public class AdApplicationController {
         return new ResponseEntity<>(updatedAdApplication, HttpStatus.OK);
     }
 
+    @GetMapping("/hasUserApplied")
+    public ResponseEntity<Boolean> hasUserAppliedToAd(@RequestParam UUID adId,
+                                                      @RequestHeader("Authorization") String token) {
+        UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        boolean hasApplied = adApplicationService.hasUserAppliedToAd(userId, adId);
+        return new ResponseEntity<>(hasApplied, HttpStatus.OK);
+    }
+
+
+
     /*@GetMapping("/getAdApplications/{adId}")
     public ResponseEntity<List<AdApplicationDTO>> getAdApplications(@PathVariable UUID adId,
                                                                     @RequestHeader("Authorization") String token) {
