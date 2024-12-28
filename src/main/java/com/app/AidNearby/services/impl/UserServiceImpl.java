@@ -1,5 +1,6 @@
 package com.app.AidNearby.services.impl;
 
+import com.app.AidNearby.Exceptions.UserNotFoundException;
 import com.app.AidNearby.domain.DTO.adsDTO.AdDTO;
 import com.app.AidNearby.domain.DTO.adsDTO.ApprovedAdsDTO;
 import com.app.AidNearby.domain.DTO.userDTO.ProfileDataDTO;
@@ -43,7 +44,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String fillOutProfile(ProfileDataDTO profileDataDTO, UUID userId) {
-        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found by ID"));
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found by ID"));
 
 
         userEntity.setFirstName(profileDataDTO.getFirstName());
@@ -75,7 +77,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ProfileDataDTO getProfile(UUID userId) {
-        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found by ID"));
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found by ID"));
         return profileDataMapper.mapToDto(userEntity);
     }
 

@@ -1,5 +1,7 @@
 package com.app.AidNearby.services.impl;
 
+import com.app.AidNearby.Exceptions.AdNotFoundException;
+import com.app.AidNearby.Exceptions.UserNotFoundException;
 import com.app.AidNearby.domain.DTO.adsDTO.AdDTO;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
@@ -32,7 +34,7 @@ public class AdServiceImpl implements AdService {
     public AdDTO createAd(AdDTO adDTO, UUID userId) throws IOException {
 
         UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
 
         AdEntity adEntity = adMapper.mapToEntity(adDTO);
         adEntity.setUser(userEntity);
@@ -83,15 +85,15 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdDTO getAdById(UUID adId) {
         AdEntity adEntity = adRepository.findById(adId)
-                .orElseThrow(() -> new RuntimeException("Ad not found with ID: " + adId));
+                .orElseThrow(() -> new AdNotFoundException("Ad not found with ID: " + adId));
 
-        return adMapper
-                .mapToDto(adEntity);
+        return adMapper.mapToDto(adEntity);
     }
 
     @Override
     public List<AdDTO> getAdsByStatusAndUserId(String status, UUID userId) {
         List<AdEntity> ads = adRepository.findByAdStatusAndUserId(status, userId);
+
 
         return ads.stream()
                 .map(adMapper::mapToDto)
@@ -101,7 +103,7 @@ public class AdServiceImpl implements AdService {
     @Override
     public String deleteAd(UUID adId, UUID userId) {
         AdEntity adEntity = adRepository.findById(adId)
-                .orElseThrow(() -> new RuntimeException("Ad not found with ID: " + adId));
+                .orElseThrow(() -> new AdNotFoundException("Ad not found with ID: " + adId));
 
         if (!adEntity.getUser().getUserId().equals(userId)) {
             throw new RuntimeException("You are not the owner of this ad.");

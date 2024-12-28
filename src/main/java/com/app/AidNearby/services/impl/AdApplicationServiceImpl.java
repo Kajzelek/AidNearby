@@ -1,5 +1,9 @@
 package com.app.AidNearby.services.impl;
 
+import com.app.AidNearby.Exceptions.AdApplicationNotFoundException;
+import com.app.AidNearby.Exceptions.AdNotFoundException;
+import com.app.AidNearby.Exceptions.NotAuthorizedException;
+import com.app.AidNearby.Exceptions.UserNotFoundException;
 import com.app.AidNearby.domain.DTO.adsDTO.AdApplicationDTO;
 import com.app.AidNearby.domain.Entities.ads.AdApplicationEntity;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
@@ -33,10 +37,10 @@ public class AdApplicationServiceImpl implements AdApplicationService {
     public AdApplicationDTO createAdApplication(AdApplicationDTO adApplicationDTO, UUID userId) {
 
         AdEntity adEntity = adRepository.findById(adApplicationDTO.getAdId())
-                .orElseThrow(() -> new RuntimeException("Ad not found with ID: " + adApplicationDTO.getAdId()));
+                .orElseThrow(() -> new AdNotFoundException("Ad not found with ID: " + adApplicationDTO.getAdId()));
 
         UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
 
         AdApplicationEntity adApplicationEntity = adApplicationMapper.mapToEntity(adApplicationDTO);
 
@@ -54,10 +58,10 @@ public class AdApplicationServiceImpl implements AdApplicationService {
     @Override
     public String deleteAdApplication(UUID adApplicationId, UUID userId) {
         AdApplicationEntity adApplicationEntity = adApplicationRepository.findById(adApplicationId)
-                .orElseThrow(() -> new RuntimeException("Ad application not found with ID: " + adApplicationId));
+                .orElseThrow(() -> new AdApplicationNotFoundException("Ad application not found with ID: " + adApplicationId));
 
         if (!adApplicationEntity.getUserId().equals(userId)) {
-            throw new RuntimeException("User is not authorized to delete this ad application");
+            throw new NotAuthorizedException("User is not authorized to delete this ad application");
         }
 
         adApplicationRepository.deleteById(adApplicationId);
@@ -83,10 +87,10 @@ public class AdApplicationServiceImpl implements AdApplicationService {
     @Override
     public AdApplicationDTO updateAdApplicationStatus(AdApplicationDTO adApplicationDTO, UUID userId) {
         AdApplicationEntity adApplicationEntity = adApplicationRepository.findById(adApplicationDTO.getAdApplicationId())
-                .orElseThrow(() -> new RuntimeException("Ad application not found with ID: " + adApplicationDTO.getAdApplicationId()));
+                .orElseThrow(() -> new AdApplicationNotFoundException("Ad application not found with ID: " + adApplicationDTO.getAdApplicationId()));
 
         if (!adApplicationEntity.getUserId().equals(userId)) {
-            throw new RuntimeException("User is not authorized to update this ad application");
+            throw new NotAuthorizedException("User is not authorized to update this ad application");
         }
 
         adApplicationEntity.setApplicationStatus(adApplicationDTO.getApplication_status());
@@ -110,23 +114,5 @@ public class AdApplicationServiceImpl implements AdApplicationService {
     public boolean hasUserAppliedToAd(UUID userId, UUID adId) {
         return adApplicationRepository.existsByUserIdAndAdId(userId, adId);
     }
-
-
-
-   /* @Override
-    public List<AdApplicationDTO> getAdApplications(UUID adId, UUID userId) {
-        return adApplicationRepository.findByAdIdAndUserId(adId, userId)
-                .stream()
-                .map(adApplicationMapper::mapToDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AdApplicationDTO> getAdApplicationsByAdCreatorId(UUID userId) {
-        return adApplicationRepository.findByUserId(userId)
-                .stream()
-                .map(adApplicationMapper::mapToDto)
-                .collect(Collectors.toList());
-    }*/
 
 }

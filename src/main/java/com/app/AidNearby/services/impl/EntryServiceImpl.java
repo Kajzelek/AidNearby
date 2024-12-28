@@ -1,5 +1,7 @@
 package com.app.AidNearby.services.impl;
 
+import com.app.AidNearby.Exceptions.InvalidCredentialsException;
+import com.app.AidNearby.Exceptions.UserNotFoundException;
 import com.app.AidNearby.domain.DTO.authDTO.AuthResponseDTO;
 import com.app.AidNearby.domain.DTO.userDTO.UserDTO;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
@@ -56,13 +58,16 @@ public class EntryServiceImpl implements EntryService {
             //This will authenticate the user via AuthenticationProvider
 
             UserEntity userEntity = userRepository.findByUsername(username);
+            if (userEntity == null) {
+                throw new UserNotFoundException("User not found with username: " + username);
+            }
 
             if(authentication.isAuthenticated()) {
                 String ipAddress = request.getRemoteAddr();
                 String token = jwtService.generateToken(username,userEntity.getUserId(),ipAddress,userEntity.getLatitude(),userEntity.getLongitude());
                 return new AuthResponseDTO(userMapper.mapToDto(userEntity), token);
             } else {
-                throw new IllegalArgumentException("Invalid credentials");
+                throw new InvalidCredentialsException("Invalid credentials");
             }
     }
 }

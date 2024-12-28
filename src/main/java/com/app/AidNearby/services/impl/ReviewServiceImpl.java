@@ -1,5 +1,7 @@
 package com.app.AidNearby.services.impl;
 
+import com.app.AidNearby.Exceptions.AdApplicationNotFoundException;
+import com.app.AidNearby.Exceptions.UserNotFoundException;
 import com.app.AidNearby.domain.DTO.reviewsDTO.ReviewDTO;
 import com.app.AidNearby.domain.Entities.ads.AdApplicationEntity;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
@@ -32,10 +34,10 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDTO createReview(ReviewDTO reviewDTO, UUID adApplicationId, UUID userId) {
 
         UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
 
         AdApplicationEntity adApplicationEntity = adApplicationRepository.findById(adApplicationId)
-                .orElseThrow(() -> new RuntimeException("AdApplication not found with ID: " + adApplicationId));
+                .orElseThrow(() -> new AdApplicationNotFoundException("AdApplication not found with ID: " + adApplicationId));
 
 
         ReviewEntity reviewEntity = reviewMapper.mapToEntity(reviewDTO);
