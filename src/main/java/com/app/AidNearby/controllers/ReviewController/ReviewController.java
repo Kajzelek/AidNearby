@@ -34,6 +34,12 @@ public class ReviewController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
+    @GetMapping("/getReviewByAdApplicationId")
+    public ResponseEntity<ReviewDTO> getReviewByAdApplicationId(@RequestParam UUID adApplicationId) {
+        ReviewDTO review = reviewService.getReviewByAdApplicationId(adApplicationId);
+        return new ResponseEntity<>(review, HttpStatus.OK);
+    }
+
     @PutMapping("/updateReview")
     public ResponseEntity<ReviewDTO> updateReview(@RequestBody ReviewDTO reviewDTO,
                                                   @RequestHeader("Authorization") String token) {
@@ -47,6 +53,14 @@ public class ReviewController {
                                                @RequestHeader("Authorization") String token) {
         UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
         String response = reviewService.deleteReview(reviewId, userId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/checkIfUserReviewed")
+    public ResponseEntity<Boolean> checkIfUserReviewed(@RequestParam UUID adApplicationId,
+                                                       @RequestHeader("Authorization") String token) {
+        UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        boolean response = reviewService.checkIfUserReviewed(adApplicationId, userId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

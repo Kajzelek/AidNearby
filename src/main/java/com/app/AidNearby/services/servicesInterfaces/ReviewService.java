@@ -9,4 +9,6 @@ public interface ReviewService {
     List<ReviewDTO> getReviewsByUserId(UUID userId);
     String deleteReview(UUID reviewId, UUID userId);
     ReviewDTO updateReview(ReviewDTO reviewDTO, UUID userId);
+    boolean checkIfUserReviewed(UUID adApplicationId, UUID userId);
+    ReviewDTO getReviewByAdApplicationId(UUID adApplicationId);
 }

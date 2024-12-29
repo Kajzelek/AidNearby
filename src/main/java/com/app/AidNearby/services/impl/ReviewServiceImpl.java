@@ -60,6 +60,19 @@ public class ReviewServiceImpl implements ReviewService {
                 .collect(Collectors.toList());
     }
 
+
+    @Override
+    public boolean checkIfUserReviewed(UUID adApplicationId, UUID userId) {
+        return reviewRepository.existsByAdApplicationIdAndUserId(adApplicationId, userId);
+    }
+
+    @Override
+    public ReviewDTO getReviewByAdApplicationId(UUID adApplicationId) {
+        ReviewEntity reviewEntity = reviewRepository.findByAdApplicationId(adApplicationId);
+        return reviewMapper.mapToDto(reviewEntity);
+    }
+
+
     @Override
     public String deleteReview(UUID reviewId, UUID userId) {
         return "";
