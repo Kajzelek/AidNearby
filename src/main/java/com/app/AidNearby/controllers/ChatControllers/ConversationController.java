@@ -1,26 +1,60 @@
 package com.app.AidNearby.controllers.ChatControllers;
 
-import com.app.AidNearby.domain.Entities.chat.MessageEntity;
-import com.app.AidNearby.repository.MessageRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.app.AidNearby.domain.DTO.adsDTO.AdDTO;
+import com.app.AidNearby.domain.DTO.chatDTO.ConversationDTO;
+import com.app.AidNearby.services.impl.ConversationServiceImpl;
+import com.app.AidNearby.services.impl.JWTserviceImpl;
+import com.app.AidNearby.services.servicesInterfaces.ConversationService;
+import lombok.AllArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/conversations")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/conversations")
 public class ConversationController {
 
-    private final MessageRepository messageRepository;
+    private final ConversationServiceImpl conversationServiceImpl;
+    private final JWTserviceImpl jWTserviceImpl;
 
-    public ConversationController(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
+    @PostMapping("/createConversation")
+    public ResponseEntity<ConversationDTO> createConversation(
+            @RequestBody ConversationDTO conversationDTO,
+            @RequestHeader("Authorization") String token) throws IOException {
+
+        UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        ConversationDTO conversation = conversationServiceImpl.createConversation(conversationDTO, userId);
+        return new ResponseEntity<>(conversation, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{userId}")
-    public List<MessageEntity> getConversations(@PathVariable Long userId) {
-        return messageRepository.findBySenderIdOrReceiverId(userId, userId);
+    @GetMapping("/getAllConversations")
+    public ResponseEntity<List<ConversationDTO>> getAllConversations(
+            @RequestHeader("Authorization") String token) throws IOException {
+
+        UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        List<ConversationDTO> conversations = conversationServiceImpl.getAllConversations(userId);
+        return new ResponseEntity<>(conversations, HttpStatus.OK);
     }
+
+    @GetMapping("/checkIfConversationExists")
+    public ResponseEntity<Boolean> checkIfConversationExists(
+            @RequestParam("user2Id") UUID user2Id,
+            @RequestHeader("Authorization") String token) throws IOException {
+
+        UUID userId = jWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        boolean exists = conversationServiceImpl.conversationExists(userId, user2Id);
+        return new ResponseEntity<>(exists, HttpStatus.OK);
+    }
+
+
+
+
 }

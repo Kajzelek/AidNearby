@@ -2,6 +2,8 @@ package com.app.AidNearby.domain.Entities.user;
 
 import com.app.AidNearby.domain.Entities.ads.AdApplicationEntity;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
+import com.app.AidNearby.domain.Entities.chat.ConversationEntity;
+import com.app.AidNearby.domain.Entities.chat.MessageEntity;
 import com.app.AidNearby.domain.Entities.reviews.ReviewEntity;
 import jakarta.persistence.*;
 
@@ -48,6 +50,9 @@ public class UserEntity {
     private Set<AdApplicationEntity> applications = new HashSet<>();
     @OneToMany(mappedBy = "user")
     private Set<ReviewEntity> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "user1")
+    private Set<ConversationEntity> conversations = new HashSet<>();
 
     @PrePersist
     public void prePersist() {

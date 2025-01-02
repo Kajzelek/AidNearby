@@ -82,6 +82,11 @@ public class UserServiceImpl implements UserService {
         return profileDataMapper.mapToDto(userEntity);
     }
 
+    @Override
+    public UserEntity getUserById(UUID userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found by ID"));
+    }
 
 
 }
