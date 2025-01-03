@@ -20,7 +20,6 @@ public class NotificationEntity {
     private UUID notificationId;
 
     private String notificationType;
-    private String notificationMessage;
     private Date createdAt;
 
     @ManyToOne

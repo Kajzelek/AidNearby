@@ -27,6 +27,7 @@ public class AdServiceImpl implements AdService {
     private AdRepository adRepository;
     private final GeocodingService geocodingService;
     private AdMapper adMapper;
+    private NotificationServiceImpl notificationService;
 
 
     @Override
@@ -59,6 +60,15 @@ public class AdServiceImpl implements AdService {
             String filePath = fileStorageService.storeFile(file);
             adEntity.setImagePath(filePath); // Zakładamy, że encja ma pole na ścieżkę do pliku
         }*/
+
+        List<UUID> usersWithinRadius = userRepository.findUsersWithinRadius(adEntity.getLatitude(), adEntity.getLongitude());
+        int usersNotified = usersWithinRadius.size();
+
+        for(UUID user : usersWithinRadius) {
+            if (!user.equals(userId)) {
+                notificationService.createNotification(user, "NEW_AD");
+            }
+        }
 
         AdEntity savedAd = adRepository.save(adEntity);
         return adMapper.mapToDto(savedAd);

@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class NotificationDTO {
+    private UUID notificationId;
     private String notificationType;
-    private String notificationMessage;
-    private Boolean isRead;
     private Date createdAt;
 }

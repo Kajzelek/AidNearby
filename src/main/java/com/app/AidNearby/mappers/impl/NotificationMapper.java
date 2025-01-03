@@ -12,8 +12,8 @@ public class NotificationMapper{
 
     public NotificationDTO mapToDto(NotificationEntity notificationEntity) {
         return NotificationDTO.builder()
+                .notificationId(notificationEntity.getNotificationId())
                 .notificationType(notificationEntity.getNotificationType())
-                .notificationMessage(notificationEntity.getNotificationMessage())
                 .createdAt(notificationEntity.getCreatedAt())
                 .build();
     }
@@ -21,7 +21,6 @@ public class NotificationMapper{
     public NotificationEntity mapToEntity(NotificationDTO notificationDTO) {
         return NotificationEntity.builder()
                 .notificationType(notificationDTO.getNotificationType())
-                .notificationMessage(notificationDTO.getNotificationMessage())
                 .build();
     }
 

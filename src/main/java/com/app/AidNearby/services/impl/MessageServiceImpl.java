@@ -21,6 +21,7 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final MessageMapper messageMapper;
     private final ConversationRepository conversationRepository;
+    private final NotificationServiceImpl notificationService;
     private final UserService userService;
 
 
@@ -40,6 +41,8 @@ public class MessageServiceImpl implements MessageService {
 
         messageEntity.setSenderId(userId);
         messageEntity.setConversation(conversationEntity);
+
+//        notificationService.createNotification(messageDTO.getReceiver(), "NEW_MESSAGE");
 
         MessageEntity savedEntity = messageRepository.save(messageEntity);
         return messageMapper.mapToDto(savedEntity);

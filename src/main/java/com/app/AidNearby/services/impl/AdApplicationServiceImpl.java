@@ -32,6 +32,7 @@ public class AdApplicationServiceImpl implements AdApplicationService {
     private final AdApplicationMapper adApplicationMapper;
     private final AdRepository adRepository;
     private final UserRepository userRepository;
+    private final NotificationServiceImpl notificationService;
 
     @Override
     public AdApplicationDTO createAdApplication(AdApplicationDTO adApplicationDTO, UUID userId) {
@@ -50,6 +51,8 @@ public class AdApplicationServiceImpl implements AdApplicationService {
         adApplicationEntity.setUser(userEntity); //?
 
         adApplicationEntity.setAdTitle(adEntity.getAdTitle());
+
+        notificationService.createNotification(adEntity.getUser().getUserId(), "NEW_APPLICATION");
         AdApplicationEntity savedEntity = adApplicationRepository.save(adApplicationEntity);
 
         return adApplicationMapper.mapToDto(savedEntity);
