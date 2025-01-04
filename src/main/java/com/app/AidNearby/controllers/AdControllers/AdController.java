@@ -74,5 +74,13 @@ public class AdController {
         return new ResponseEntity<>("Ad deleted", HttpStatus.OK);
     }
 
+    @PutMapping("/closeAd")
+    public ResponseEntity<AdDTO> closeAd(@RequestParam UUID adId,
+                                          @RequestHeader("Authorization") String token) {
+        UUID userId = JWTserviceImpl.extractSpecifiedClaim(token, "userId");
+        AdDTO ad = adService.closeAd(adId, userId);
+        return new ResponseEntity<>(ad, HttpStatus.OK);
+    }
+
 
 }

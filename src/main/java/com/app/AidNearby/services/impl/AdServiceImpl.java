@@ -123,5 +123,19 @@ public class AdServiceImpl implements AdService {
         return "Ad deleted";
     }
 
+    @Override
+    public AdDTO closeAd(UUID adId, UUID userId) {
+        AdEntity adEntity = adRepository.findById(adId)
+                .orElseThrow(() -> new AdNotFoundException("Ad not found with ID: " + adId));
+
+        if (!adEntity.getUser().getUserId().equals(userId)) {
+            throw new RuntimeException("You are not the owner of this ad.");
+        }
+
+        adEntity.setAdStatus("INACTIVE");
+        AdEntity savedEntity = adRepository.save(adEntity);
+        return adMapper.mapToDto(savedEntity);
+    }
+
 
 }

@@ -17,6 +17,6 @@ public interface AdService {
     AdDTO getAdById(UUID adId);
     List<AdDTO> getAdsByStatusAndUserId(String status, UUID userId);
     String deleteAd(UUID adId, UUID userId);
-
+    AdDTO closeAd(UUID adId, UUID userId);
 
 }
