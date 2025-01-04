@@ -27,6 +27,20 @@ public interface AdRepository extends JpaRepository<AdEntity, UUID> {
     );
 
     @Query("SELECT a FROM AdEntity a " +
+            "WHERE a.adCategory = :category " +
+            "AND a.adStatus = :status " +
+            "AND (6371 * acos(cos(radians(:latitude)) * cos(radians(a.latitude)) " +
+            "* cos(radians(a.longitude) - radians(:longitude)) " +
+            "+ sin(radians(:latitude)) * sin(radians(a.latitude)))) <= :radius")
+    List<AdEntity> findAdsByCategoryAndDistanceAndStatus(
+            @Param("category") String category,
+            @Param("latitude") Double latitude,
+            @Param("longitude") Double longitude,
+            @Param("radius") Double radius,
+            @Param("status") String status
+    );
+
+    @Query("SELECT a FROM AdEntity a " +
             "WHERE (6371 * acos(cos(radians(:latitude)) * cos(radians(a.latitude)) " +
             "* cos(radians(a.longitude) - radians(:longitude)) " +
             "+ sin(radians(:latitude)) * sin(radians(a.latitude)))) <= :radius")
@@ -34,5 +48,17 @@ public interface AdRepository extends JpaRepository<AdEntity, UUID> {
             @Param("latitude") Double latitude,
             @Param("longitude") Double longitude,
             @Param("radius") Double radius
+    );
+
+    @Query("SELECT a FROM AdEntity a " +
+            "WHERE a.adStatus = :status " +
+            "AND (6371 * acos(cos(radians(:latitude)) * cos(radians(a.latitude)) " +
+            "* cos(radians(a.longitude) - radians(:longitude)) " +
+            "+ sin(radians(:latitude)) * sin(radians(a.latitude)))) <= :radius")
+    List<AdEntity> findAdsByDistanceAndStatus(
+            @Param("latitude") Double latitude,
+            @Param("longitude") Double longitude,
+            @Param("radius") Double radius,
+            @Param("status") String status
     );
 }

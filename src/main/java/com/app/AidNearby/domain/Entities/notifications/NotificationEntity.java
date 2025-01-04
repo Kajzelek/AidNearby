@@ -22,6 +22,8 @@ public class NotificationEntity {
     private String notificationType;
     private Date createdAt;
 
+    private UUID adId;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;

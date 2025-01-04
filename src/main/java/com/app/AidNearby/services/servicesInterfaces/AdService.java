@@ -14,9 +14,10 @@ public interface AdService {
     AdDTO createAd(AdDTO adDTO, UUID userId) throws IOException;
     List<AdDTO> searchAds(String category, Double latitude, Double longitude, Double radius);
     List<AdDTO> searchAds(Double latitude, Double longitude, Double radius);
+    List<AdDTO> searchAdsByCategoryStatus(String category, Double latitude, Double longitude, Double radius, String status);
+    List<AdDTO> searchAdsByStatus(Double latitude, Double longitude, Double radius, String status);
     AdDTO getAdById(UUID adId);
     List<AdDTO> getAdsByStatusAndUserId(String status, UUID userId);
     String deleteAd(UUID adId, UUID userId);
     AdDTO closeAd(UUID adId, UUID userId);
-
 }

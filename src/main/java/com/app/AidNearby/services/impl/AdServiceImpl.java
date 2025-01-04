@@ -4,6 +4,7 @@ import com.app.AidNearby.Exceptions.AdNotFoundException;
 import com.app.AidNearby.Exceptions.UserNotFoundException;
 import com.app.AidNearby.domain.DTO.adsDTO.AdDTO;
 import com.app.AidNearby.domain.Entities.ads.AdEntity;
+import com.app.AidNearby.domain.Entities.notifications.NotificationEntity;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
 import com.app.AidNearby.mappers.impl.AdMapper;
 import com.app.AidNearby.repository.AdRepository;
@@ -66,7 +67,8 @@ public class AdServiceImpl implements AdService {
 
         for(UUID user : usersWithinRadius) {
             if (!user.equals(userId)) {
-                notificationService.createNotification(user, "NEW_AD");
+                NotificationEntity notificationEntity = notificationService.createNotification(user, "NEW_AD");
+                notificationEntity.setAdId(adEntity.getAdId());
             }
         }
 
@@ -86,6 +88,26 @@ public class AdServiceImpl implements AdService {
     @Override
     public List<AdDTO> searchAds(Double latitude, Double longitude, Double radius) {
         List<AdEntity> ads = adRepository.findAdsByDistance(latitude, longitude, radius);
+
+        return ads.stream()
+                .map(adMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AdDTO> searchAdsByStatus(Double latitude, Double longitude, Double radius, String status) {
+        List<AdEntity> ads = adRepository.findAdsByDistanceAndStatus(latitude, longitude, radius, status);
+
+        return ads.stream()
+                .map(adMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+
+
+    @Override
+    public List<AdDTO> searchAdsByCategoryStatus(String category, Double latitude, Double longitude, Double radius, String status) {
+        List<AdEntity> ads = adRepository.findAdsByCategoryAndDistanceAndStatus(category, latitude, longitude, radius, status);
 
         return ads.stream()
                 .map(adMapper::mapToDto)
@@ -136,6 +158,9 @@ public class AdServiceImpl implements AdService {
         AdEntity savedEntity = adRepository.save(adEntity);
         return adMapper.mapToDto(savedEntity);
     }
+
+
+
 
 
 }

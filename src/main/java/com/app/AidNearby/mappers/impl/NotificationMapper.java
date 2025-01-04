@@ -13,6 +13,7 @@ public class NotificationMapper{
     public NotificationDTO mapToDto(NotificationEntity notificationEntity) {
         return NotificationDTO.builder()
                 .notificationId(notificationEntity.getNotificationId())
+                .adId(notificationEntity.getAdId())
                 .notificationType(notificationEntity.getNotificationType())
                 .createdAt(notificationEntity.getCreatedAt())
                 .build();

@@ -34,6 +34,10 @@ public class NotificationServiceImpl implements NotificationService {
         notificationEntity.setNotificationType(notificationType);
         notificationEntity.setUser(userEntity);
 
+        if (notificationType.equals("newAd")) {
+            notificationEntity.setAdId(UUID.randomUUID());
+        }
+
 
         return notificationRepository.save(notificationEntity);
     }

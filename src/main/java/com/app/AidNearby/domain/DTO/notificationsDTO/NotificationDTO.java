@@ -14,6 +14,7 @@ import java.util.UUID;
 @Builder
 public class NotificationDTO {
     private UUID notificationId;
+    private UUID adId;
     private String notificationType;
     private Date createdAt;
 }

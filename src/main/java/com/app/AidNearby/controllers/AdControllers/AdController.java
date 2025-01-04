@@ -52,6 +52,29 @@ public class AdController {
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
 
+    @GetMapping("/searchByStatus/anyCategory")
+    public ResponseEntity<List<AdDTO>> searchAds(
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam Double radius,
+            @RequestParam String status) {
+
+        List<AdDTO> ads = adService.searchAdsByStatus(latitude, longitude, radius, status);
+        return new ResponseEntity<>(ads, HttpStatus.OK);
+    }
+
+    @GetMapping("/searchByStatus")
+    public ResponseEntity<List<AdDTO>> searchAdsByStatus(
+            @RequestParam String category,
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam Double radius,
+            @RequestParam String status) {
+
+        List<AdDTO> ads = adService.searchAdsByCategoryStatus(category, latitude, longitude, radius, status);
+        return new ResponseEntity<>(ads, HttpStatus.OK);
+    }
+
     @GetMapping("/{adId}")
     public ResponseEntity<AdDTO> getAdById(@PathVariable UUID adId) {
         AdDTO ad = adService.getAdById(adId);
