@@ -77,7 +77,7 @@ public class JWTserviceImpl implements JWTservice {
     }
 
     @Override
-    public String refreshToken(String token) {
+    public String refreshToken(String token){
         return "";
     }
 

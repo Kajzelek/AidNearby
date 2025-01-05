@@ -34,13 +34,26 @@ public class NotificationServiceImpl implements NotificationService {
         notificationEntity.setNotificationType(notificationType);
         notificationEntity.setUser(userEntity);
 
-        if (notificationType.equals("newAd")) {
-            notificationEntity.setAdId(UUID.randomUUID());
-        }
+
+        return notificationRepository.save(notificationEntity);
+    }
+
+    @Override
+    public NotificationEntity createAdNotification(UUID userId, String notificationType, UUID adId) {
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+
+        NotificationEntity notificationEntity = new NotificationEntity();
+
+        notificationEntity.setNotificationType(notificationType);
+        notificationEntity.setUser(userEntity);
+        System.out.println("AdId: " + adId);
+        notificationEntity.setAdId(adId);
 
 
         return notificationRepository.save(notificationEntity);
     }
+
 
     @Override
     public List<NotificationDTO> getNotificationsByUserId(UUID userId) {

@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface NotificationService {
     NotificationEntity createNotification(UUID userId, String notificationType);
+    NotificationEntity createAdNotification(UUID userId, String notificationType, UUID adId);
     List<NotificationDTO> getNotificationsByUserId(UUID userId);
     Boolean deleteAllNotifications(UUID userId);
     Boolean deleteNotification(UUID notificationId);

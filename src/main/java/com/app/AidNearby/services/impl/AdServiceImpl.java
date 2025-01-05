@@ -8,6 +8,7 @@ import com.app.AidNearby.domain.Entities.notifications.NotificationEntity;
 import com.app.AidNearby.domain.Entities.user.UserEntity;
 import com.app.AidNearby.mappers.impl.AdMapper;
 import com.app.AidNearby.repository.AdRepository;
+import com.app.AidNearby.repository.NotificationRepository;
 import com.app.AidNearby.repository.UserRepository;
 import com.app.AidNearby.services.servicesInterfaces.AdService;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,7 @@ public class AdServiceImpl implements AdService {
     private final GeocodingService geocodingService;
     private AdMapper adMapper;
     private NotificationServiceImpl notificationService;
+    private NotificationRepository notificationRepository;
 
 
     @Override
@@ -61,18 +63,15 @@ public class AdServiceImpl implements AdService {
             String filePath = fileStorageService.storeFile(file);
             adEntity.setImagePath(filePath); // Zakładamy, że encja ma pole na ścieżkę do pliku
         }*/
+        AdEntity savedAd = adRepository.save(adEntity);
 
         List<UUID> usersWithinRadius = userRepository.findUsersWithinRadius(adEntity.getLatitude(), adEntity.getLongitude());
-        int usersNotified = usersWithinRadius.size();
 
         for(UUID user : usersWithinRadius) {
             if (!user.equals(userId)) {
-                NotificationEntity notificationEntity = notificationService.createNotification(user, "NEW_AD");
-                notificationEntity.setAdId(adEntity.getAdId());
+                notificationService.createAdNotification(user, "NEW_AD", adEntity.getAdId());
             }
         }
-
-        AdEntity savedAd = adRepository.save(adEntity);
         return adMapper.mapToDto(savedAd);
     }
 
